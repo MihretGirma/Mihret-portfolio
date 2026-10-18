@@ -1,0 +1,1371 @@
+<!doctype html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mihret Girma — Frontend & Flutter Developer | UI/UX Designer</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              heading: ["Outfit", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                50: "var(--brand-50)",
+                100: "var(--brand-100)",
+                400: "var(--brand-400)",
+                500: "var(--brand-500)",
+                600: "var(--brand-600)",
+                700: "var(--brand-700)",
+              },
+            },
+            animation: {
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              float: "float 6s ease-in-out infinite",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0px)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* CSS Variables for Dynamic Color Theme Switcher */
+      :root {
+        --brand-50: #eef2ff;
+        --brand-100: #e0e7ff;
+        --brand-400: #818cf8;
+        --brand-500: #6366f1;
+        --brand-600: #4f46e5;
+        --brand-700: #4338ca;
+        --brand-glow: rgba(99, 102, 241, 0.25);
+      }
+
+      /* Color Theme Presets */
+      [data-theme="indigo"] {
+        --brand-50: #eef2ff;
+        --brand-100: #e0e7ff;
+        --brand-400: #818cf8;
+        --brand-500: #6366f1;
+        --brand-600: #4f46e5;
+        --brand-700: #4338ca;
+        --brand-glow: rgba(99, 102, 241, 0.25);
+      }
+      [data-theme="emerald"] {
+        --brand-50: #ecfdf5;
+        --brand-100: #d1fae5;
+        --brand-400: #34d399;
+        --brand-500: #10b981;
+        --brand-600: #059669;
+        --brand-700: #047857;
+        --brand-glow: rgba(16, 185, 129, 0.25);
+      }
+      [data-theme="cyan"] {
+        --brand-50: #ecfeff;
+        --brand-100: #cffaff;
+        --brand-400: #22d3ee;
+        --brand-500: #06b6d4;
+        --brand-600: #0891b2;
+        --brand-700: #0e7490;
+        --brand-glow: rgba(6, 182, 212, 0.25);
+      }
+      [data-theme="rose"] {
+        --brand-50: #fff1f2;
+        --brand-100: #ffe4e6;
+        --brand-400: #fb7185;
+        --brand-500: #f43f5e;
+        --brand-600: #e11d48;
+        --brand-700: #be123c;
+        --brand-glow: rgba(244, 63, 94, 0.25);
+      }
+
+      /* Glassmorphism Styles */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      .dark .glass-panel {
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .glow-effect {
+        box-shadow: 0 0 25px -5px var(--brand-glow);
+      }
+
+      /* Typing cursor effect */
+      .typing-cursor::after {
+        content: "|";
+        animation: blink 1s infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* Hide scrollbars for clean Look while allowing scroll */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 font-sans antialiased selection:bg-brand-500 selection:text-white"
+  >
+    <!-- Background Ambient Glows -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      <div
+        class="absolute -top-40 -left-40 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl animation-pulse-slow"
+      ></div>
+      <div
+        class="absolute top-1/3 -right-40 w-96 h-96 bg-purple-500/15 dark:bg-purple-600/15 rounded-full blur-3xl animation-pulse-slow"
+        style="animation-delay: 2s"
+      ></div>
+      <div
+        class="absolute -bottom-40 left-1/3 w-96 h-96 bg-cyan-500/15 dark:bg-cyan-600/15 rounded-full blur-3xl animation-pulse-slow"
+        style="animation-delay: 1s"
+      ></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header
+      class="fixed top-0 left-0 w-full z-40 px-4 sm:px-8 py-4 transition-all duration-300"
+      id="navbar"
+    >
+      <div
+        class="max-w-7xl mx-auto glass-panel rounded-full px-6 py-3 flex items-center justify-between shadow-lg shadow-black/5"
+      >
+        <!-- Brand Logo -->
+        <a
+          href="#hero"
+          class="flex items-center gap-2 font-heading font-bold text-xl tracking-tight hover:text-brand-500 transition-colors"
+        >
+          <span
+            class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-white text-lg shadow-md font-extrabold"
+            >M</span
+          >
+          <span>Mihret<span class="text-brand-500">.dev</span></span>
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <nav
+          class="hidden md:flex items-center gap-8 font-medium text-sm text-slate-600 dark:text-slate-300"
+        >
+          <a
+            href="#about"
+            class="nav-link hover:text-brand-500 transition-colors"
+            >About</a
+          >
+          <a
+            href="#skills"
+            class="nav-link hover:text-brand-500 transition-colors"
+            >Skills</a
+          >
+          <a
+            href="#projects"
+            class="nav-link hover:text-brand-500 transition-colors"
+            >Projects</a
+          >
+          <a
+            href="#contact"
+            class="nav-link hover:text-brand-500 transition-colors"
+            >Contact</a
+          >
+        </nav>
+
+        <!-- Actions & Controls -->
+        <div class="flex items-center gap-3">
+          <!-- Color Theme Customizer Toggle -->
+          <div class="relative group">
+            <button
+              id="themeCustomizerBtn"
+              title="Theme Accent Colors"
+              class="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors text-slate-600 dark:text-slate-300"
+            >
+              <i data-lucide="palette" class="w-5 h-5"></i>
+            </button>
+            <!-- Color Picker Menu -->
+            <div
+              id="themeMenu"
+              class="hidden absolute right-0 mt-2 w-36 glass-panel rounded-2xl p-3 shadow-xl flex flex-col gap-2 z-50"
+            >
+              <span
+                class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-1"
+                >Accent Color</span
+              >
+              <div class="grid grid-cols-2 gap-2">
+                <button
+                  onclick="setAccentTheme('indigo')"
+                  class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-medium"
+                >
+                  <span class="w-3.5 h-3.5 rounded-full bg-indigo-500"></span>
+                  Indigo
+                </button>
+                <button
+                  onclick="setAccentTheme('emerald')"
+                  class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-medium"
+                >
+                  <span class="w-3.5 h-3.5 rounded-full bg-emerald-500"></span>
+                  Emerald
+                </button>
+                <button
+                  onclick="setAccentTheme('cyan')"
+                  class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-medium"
+                >
+                  <span class="w-3.5 h-3.5 rounded-full bg-cyan-500"></span>
+                  Cyan
+                </button>
+                <button
+                  onclick="setAccentTheme('rose')"
+                  class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-medium"
+                >
+                  <span class="w-3.5 h-3.5 rounded-full bg-rose-500"></span>
+                  Rose
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dark / Light Mode Switcher -->
+          <button
+            id="darkToggleBtn"
+            onclick="toggleDarkMode()"
+            title="Toggle Dark/Light Mode"
+            class="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors text-slate-600 dark:text-slate-300"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+            <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+          </button>
+
+          <!-- Mobile Menu Button -->
+          <button
+            id="mobileMenuBtn"
+            class="md:hidden p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors text-slate-600 dark:text-slate-300"
+          >
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Menu Dropdown -->
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden max-w-7xl mx-auto mt-2 glass-panel rounded-2xl p-6 shadow-xl flex flex-col gap-4 text-center font-medium"
+      >
+        <a
+          href="#about"
+          onclick="toggleMobileMenu()"
+          class="hover:text-brand-500 py-1"
+          >About</a
+        >
+        <a
+          href="#skills"
+          onclick="toggleMobileMenu()"
+          class="hover:text-brand-500 py-1"
+          >Skills</a
+        >
+        <a
+          href="#projects"
+          onclick="toggleMobileMenu()"
+          class="hover:text-brand-500 py-1"
+          >Projects</a
+        >
+        <a
+          href="#contact"
+          onclick="toggleMobileMenu()"
+          class="hover:text-brand-500 py-1"
+          >Contact</a
+        >
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 pt-24">
+      <!-- 1. HERO SECTION -->
+      <section
+        id="hero"
+        class="min-h-[85vh] flex flex-col-reverse lg:flex-row items-center justify-between gap-12 py-12"
+      >
+        <!-- Left Info Column -->
+        <div class="flex-1 text-center lg:text-left space-y-6">
+          <!-- Status Badge -->
+          <div
+            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border border-brand-500/20 text-xs font-semibold text-brand-600 dark:text-brand-400"
+          >
+            <span
+              class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"
+            ></span>
+            <span>Software Engineering Student & Problem Solver</span>
+          </div>
+
+          <!-- Main Title & Dynamic Typing Role -->
+          <h1
+            class="text-4xl sm:text-6xl font-heading font-extrabold tracking-tight leading-tight"
+          >
+            Hi, I'm
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-purple-500 to-cyan-500"
+              >Mihret Girma</span
+            >
+            <br />
+            <span
+              class="text-2xl sm:text-4xl font-semibold text-slate-600 dark:text-slate-300 block mt-2"
+            >
+              I am a
+              <span id="typingText" class="text-brand-500 typing-cursor"></span>
+            </span>
+          </h1>
+
+          <!-- Short Elevator Bio -->
+          <p
+            class="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl leading-relaxed mx-auto lg:mx-0"
+          >
+            Passionate about problem solving, crafting intuitive web & mobile
+            interfaces, and engineering efficient, user-centered digital
+            applications.
+          </p>
+
+          <!-- Action Buttons -->
+          <div
+            class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2"
+          >
+            <a
+              href="#projects"
+              class="px-6 py-3.5 rounded-full bg-brand-500 hover:bg-brand-600 text-white font-medium shadow-lg shadow-brand-500/30 transition-all hover:scale-105 flex items-center gap-2"
+            >
+              <span>Explore Projects</span>
+              <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
+            </a>
+            <a
+              href="#contact"
+              class="px-6 py-3.5 rounded-full glass-panel hover:bg-slate-200/50 dark:hover:bg-slate-800/50 font-medium transition-all hover:scale-105 flex items-center gap-2"
+            >
+              <span>Contact Me</span>
+              <i data-lucide="mail" class="w-4 h-4"></i>
+            </a>
+            <button
+              onclick="
+                copyToClipboard(
+                  'mihretgirma14@gmail.com',
+                  'Email address copied!',
+                )
+              "
+              class="p-3.5 rounded-full glass-panel hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all text-slate-600 dark:text-slate-300 hover:text-brand-500"
+              title="Copy Email"
+            >
+              <i data-lucide="copy" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <!-- Social Links & Contact Quick Access -->
+          <div
+            class="flex items-center justify-center lg:justify-start gap-4 pt-4 text-slate-500 dark:text-slate-400"
+          >
+            <a
+              href="https://github.com/MihretGirma"
+              target="_blank"
+              rel="noopener"
+              class="p-2.5 rounded-xl glass-panel hover:text-brand-500 hover:scale-110 transition-all flex items-center gap-2 text-xs font-semibold"
+            >
+              <i data-lucide="github" class="w-5 h-5"></i>
+              <span>GitHub</span>
+            </a>
+            <a
+              href="mailto:mihretgirma14@gmail.com"
+              class="p-2.5 rounded-xl glass-panel hover:text-brand-500 hover:scale-110 transition-all flex items-center gap-2 text-xs font-semibold"
+            >
+              <i data-lucide="mail" class="w-5 h-5"></i>
+              <span>Email</span>
+            </a>
+            <a
+              href="tel:+251933187995"
+              class="p-2.5 rounded-xl glass-panel hover:text-brand-500 hover:scale-110 transition-all flex items-center gap-2 text-xs font-semibold"
+            >
+              <i data-lucide="phone" class="w-5 h-5"></i>
+              <span>+251 933 187 995</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Visual Graphic Column -->
+        <div class="flex-1 flex justify-center items-center relative">
+          <div
+            class="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full p-2 bg-gradient-to-tr from-brand-500 via-purple-500 to-cyan-500 shadow-2xl glow-effect animate-float"
+          >
+            <div
+              class="w-full h-full rounded-full overflow-hidden bg-slate-900 flex flex-col items-center justify-center text-center p-6 relative group"
+            >
+              <div
+                class="w-20 h-20 rounded-2xl bg-brand-500/20 text-brand-400 flex items-center justify-center mb-3"
+              >
+                <i data-lucide="code-2" class="w-10 h-10"></i>
+              </div>
+              <h3 class="font-heading font-bold text-lg text-white">
+                Mihret Girma
+              </h3>
+              <p class="text-xs text-brand-400 font-medium mt-1">
+                Software Engineer Student
+              </p>
+            </div>
+          </div>
+
+          <!-- Floating Stats Cards -->
+          <div
+            class="absolute -bottom-4 -left-4 glass-panel p-4 rounded-2xl shadow-lg border border-slate-200/20 flex items-center gap-3"
+          >
+            <div
+              class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center"
+            >
+              <i data-lucide="smartphone" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                Focus
+              </p>
+              <p class="text-sm font-bold font-heading">Flutter & Web UI</p>
+            </div>
+          </div>
+
+          <div
+            class="absolute -top-2 -right-2 glass-panel p-4 rounded-2xl shadow-lg border border-slate-200/20 flex items-center gap-3"
+          >
+            <div
+              class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center"
+            >
+              <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                Passion
+              </p>
+              <p class="text-sm font-bold font-heading">Problem Solving</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. ABOUT ME SECTION -->
+      <section
+        id="about"
+        class="py-20 border-t border-slate-200/50 dark:border-slate-800/50"
+      >
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span
+            class="text-xs font-bold tracking-widest text-brand-500 uppercase"
+            >Profile Overview</span
+          >
+          <h2 class="text-3xl sm:text-4xl font-heading font-bold mt-2">
+            About Mihret
+          </h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-4 leading-relaxed">
+            Software Engineering Student dedicated to creating smooth user
+            experiences across web browsers and mobile platforms.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 items-stretch">
+          <!-- Left Details Card -->
+          <div
+            class="glass-panel p-8 rounded-3xl shadow-sm flex flex-col justify-between space-y-6"
+          >
+            <div class="space-y-4">
+              <h3 class="text-xl font-bold font-heading">
+                Passionate Engineer & Designer
+              </h3>
+              <p
+                class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm"
+              >
+                I am a Software Engineering student driven by logical thinking,
+                algorithm design, and user-centric aesthetics. I specialize in
+                building responsive web applications using modern web
+                technologies and cross-platform mobile apps using Flutter &
+                Dart.
+              </p>
+              <p
+                class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm"
+              >
+                My design workflow includes UI/UX user research, wireframing,
+                and interactive prototyping in Figma to ensure every feature is
+                both functional and delightful to use.
+              </p>
+            </div>
+
+            <!-- Quick Highlight Grid -->
+            <div
+              class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-200/50 dark:border-slate-800/50"
+            >
+              <div>
+                <span class="text-xs text-slate-500 dark:text-slate-400 block"
+                  >Status</span
+                >
+                <span class="font-semibold text-sm">Software Eng. Student</span>
+              </div>
+              <div>
+                <span class="text-xs text-slate-500 dark:text-slate-400 block"
+                  >Mobile Focus</span
+                >
+                <span class="font-semibold text-sm">Flutter & Dart</span>
+              </div>
+              <div>
+                <span class="text-xs text-slate-500 dark:text-slate-400 block"
+                  >Frontend Stack</span
+                >
+                <span class="font-semibold text-sm">HTML, CSS, JS</span>
+              </div>
+              <div>
+                <span class="text-xs text-slate-500 dark:text-slate-400 block"
+                  >Design Skill</span
+                >
+                <span class="font-semibold text-sm">UI/UX & Prototyping</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Core Pillars Card -->
+          <div
+            class="glass-panel p-8 rounded-3xl shadow-sm flex flex-col justify-between space-y-6"
+          >
+            <h3 class="text-xl font-bold font-heading">
+              What I Bring To The Table
+            </h3>
+
+            <div class="space-y-4">
+              <div
+                class="p-4 rounded-2xl bg-slate-100/60 dark:bg-slate-900/60 flex items-start gap-4"
+              >
+                <div
+                  class="p-2.5 rounded-xl bg-brand-500/10 text-brand-500 shrink-0"
+                >
+                  <i data-lucide="layout" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm">
+                    Frontend Web Development
+                  </h4>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    Creating accessible, responsive, and cross-browser web
+                    interfaces using HTML, CSS, JavaScript, and Tailwind UI
+                    principles.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="p-4 rounded-2xl bg-slate-100/60 dark:bg-slate-900/60 flex items-start gap-4"
+              >
+                <div
+                  class="p-2.5 rounded-xl bg-purple-500/10 text-purple-500 shrink-0"
+                >
+                  <i data-lucide="smartphone" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm">Flutter Mobile Apps</h4>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    Developing cross-platform iOS and Android applications with
+                    Dart, state management, and clean material/Cupertino
+                    components.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="p-4 rounded-2xl bg-slate-100/60 dark:bg-slate-900/60 flex items-start gap-4"
+              >
+                <div
+                  class="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-500 shrink-0"
+                >
+                  <i data-lucide="figma" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm">UI/UX Design & Research</h4>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    Translating user requirements into user flow diagrams,
+                    low/high-fidelity wireframes, and interactive Figma
+                    prototypes.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. SKILLS & TECH STACK SECTION -->
+      <section
+        id="skills"
+        class="py-20 border-t border-slate-200/50 dark:border-slate-800/50"
+      >
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span
+            class="text-xs font-bold tracking-widest text-brand-500 uppercase"
+            >Technical Skill Set</span
+          >
+          <h2 class="text-3xl sm:text-4xl font-heading font-bold mt-2">
+            Skills & Technologies
+          </h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-4 leading-relaxed">
+            Tools, languages, and frameworks I utilize to design and engineer
+            software solutions.
+          </p>
+        </div>
+
+        <!-- Skills Grid with Interactive Tabs -->
+        <div class="space-y-8">
+          <!-- Skill Category Selectors -->
+          <div class="flex justify-center flex-wrap gap-2" id="skillTabs">
+            <button
+              onclick="filterSkills('all')"
+              class="skill-tab-btn active px-5 py-2.5 rounded-full text-xs font-semibold glass-panel bg-brand-500 text-white transition-all"
+            >
+              All Skills
+            </button>
+            <button
+              onclick="filterSkills('frontend')"
+              class="skill-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold glass-panel text-slate-600 dark:text-slate-300 hover:text-brand-500 transition-all"
+            >
+              Frontend Web
+            </button>
+            <button
+              onclick="filterSkills('mobile')"
+              class="skill-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold glass-panel text-slate-600 dark:text-slate-300 hover:text-brand-500 transition-all"
+            >
+              Mobile Development
+            </button>
+            <button
+              onclick="filterSkills('design')"
+              class="skill-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold glass-panel text-slate-600 dark:text-slate-300 hover:text-brand-500 transition-all"
+            >
+              UI/UX Design
+            </button>
+            <button
+              onclick="filterSkills('core')"
+              class="skill-tab-btn px-5 py-2.5 rounded-full text-xs font-semibold glass-panel text-slate-600 dark:text-slate-300 hover:text-brand-500 transition-all"
+            >
+              CS Core & Tools
+            </button>
+          </div>
+
+          <!-- Skill Grid Display -->
+          <div
+            class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+            id="skillsContainer"
+          >
+            <!-- Skills will be dynamically populated by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. FEATURED PROJECTS SECTION -->
+      <section
+        id="projects"
+        class="py-20 border-t border-slate-200/50 dark:border-slate-800/50"
+      >
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span
+            class="text-xs font-bold tracking-widest text-brand-500 uppercase"
+            >Portfolio</span
+          >
+          <h2 class="text-3xl sm:text-4xl font-heading font-bold mt-2">
+            Featured Projects
+          </h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-4 leading-relaxed">
+            Key projects reflecting my engineering, design, and problem-solving
+            journey.
+          </p>
+        </div>
+
+        <!-- Category Filter Buttons -->
+        <div
+          class="flex justify-center flex-wrap gap-2 mb-12"
+          id="projectFilterBtns"
+        >
+          <button
+            onclick="filterProjects('all')"
+            class="project-btn active px-4 py-2 rounded-xl text-xs font-semibold bg-brand-500 text-white shadow-md transition-all"
+          >
+            All Projects
+          </button>
+          <button
+            onclick="filterProjects('web')"
+            class="project-btn px-4 py-2 rounded-xl text-xs font-semibold glass-panel text-slate-600 dark:text-slate-300 hover:text-brand-500 transition-all"
+          >
+            Web Apps
+          </button>
+          <button
+            onclick="filterProjects('system')"
+            class="project-btn px-4 py-2 rounded-xl text-xs font-semibold glass-panel text-slate-600 dark:text-slate-300 hover:text-brand-500 transition-all"
+          >
+            Management Systems
+          </button>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projectsGrid">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </section>
+
+      <!-- 5. CONTACT SECTION -->
+      <section
+        id="contact"
+        class="py-20 border-t border-slate-200/50 dark:border-slate-800/50"
+      >
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span
+            class="text-xs font-bold tracking-widest text-brand-500 uppercase"
+            >Get In Touch</span
+          >
+          <h2 class="text-3xl sm:text-4xl font-heading font-bold mt-2">
+            Let's Connect
+          </h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-4 leading-relaxed">
+            Have a project, internship opportunity, or collaboration in mind?
+            Feel free to reach out!
+          </p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8 items-start max-w-5xl mx-auto">
+          <!-- Direct Contact Details Card -->
+          <div class="space-y-6 glass-panel p-8 rounded-3xl shadow-sm">
+            <h3 class="text-xl font-bold font-heading">Contact Details</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm">
+              Directly contact Mihret Girma through email, phone, or GitHub.
+            </p>
+
+            <div class="space-y-4 pt-2">
+              <div class="flex items-center gap-4">
+                <div class="p-3 rounded-2xl bg-brand-500/10 text-brand-500">
+                  <i data-lucide="mail" class="w-5 h-5"></i>
+                </div>
+                <div class="overflow-hidden">
+                  <span class="text-xs text-slate-500 block">Email</span>
+                  <a
+                    href="mailto:mihretgirma14@gmail.com"
+                    class="font-semibold text-xs sm:text-sm hover:text-brand-500 truncate block"
+                    >mihretgirma14@gmail.com</a
+                  >
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <div class="p-3 rounded-2xl bg-purple-500/10 text-purple-500">
+                  <i data-lucide="phone" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <span class="text-xs text-slate-500 block">Phone</span>
+                  <a
+                    href="tel:+251933187995"
+                    class="font-semibold text-sm hover:text-brand-500"
+                    >+251 933 187 995</a
+                  >
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <div class="p-3 rounded-2xl bg-cyan-500/10 text-cyan-500">
+                  <i data-lucide="github" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <span class="text-xs text-slate-500 block"
+                    >GitHub Profile</span
+                  >
+                  <a
+                    href="https://github.com/MihretGirma"
+                    target="_blank"
+                    rel="noopener"
+                    class="font-semibold text-sm hover:text-brand-500"
+                    >github.com/MihretGirma</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="lg:col-span-2 glass-panel p-8 rounded-3xl shadow-sm">
+            <form
+              id="contactForm"
+              onsubmit="handleContactSubmit(event)"
+              class="space-y-6"
+            >
+              <div class="grid sm:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                  <label
+                    for="name"
+                    class="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider"
+                    >Your Name</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    placeholder="Full Name"
+                    class="w-full px-4 py-3 rounded-xl bg-slate-100/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm transition-all"
+                  />
+                </div>
+                <div class="space-y-2">
+                  <label
+                    for="email"
+                    class="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider"
+                    >Your Email</label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    placeholder="email@example.com"
+                    class="w-full px-4 py-3 rounded-xl bg-slate-100/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm transition-all"
+                  />
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <label
+                  for="subject"
+                  class="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider"
+                  >Subject</label
+                >
+                <input
+                  type="text"
+                  id="subject"
+                  required
+                  placeholder="Project Collaboration / Opportunity"
+                  class="w-full px-4 py-3 rounded-xl bg-slate-100/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm transition-all"
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label
+                  for="message"
+                  class="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider"
+                  >Message</label
+                >
+                <textarea
+                  id="message"
+                  rows="4"
+                  required
+                  placeholder="Write your message here..."
+                  class="w-full px-4 py-3 rounded-xl bg-slate-100/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm transition-all"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                id="submitBtn"
+                class="w-full py-4 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-semibold text-sm shadow-lg shadow-brand-500/25 transition-all flex items-center justify-center gap-2"
+              >
+                <span>Send Message to Mihret</span>
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer
+      class="border-t border-slate-200/50 dark:border-slate-800/50 py-8 mt-12 bg-slate-100/30 dark:bg-slate-950/30"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500"
+      >
+        <p>© <span id="year"></span> Mihret Girma. All rights reserved.</p>
+        <p class="flex items-center gap-1">
+          Designed & Built with
+          <i
+            data-lucide="heart"
+            class="w-3.5 h-3.5 text-rose-500 fill-rose-500"
+          ></i>
+          by Mihret Girma
+        </p>
+      </div>
+    </footer>
+
+    <!-- PROJECT MODAL DETAIL -->
+    <div
+      id="projectModal"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300"
+    >
+      <div
+        class="glass-panel w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto no-scrollbar transform scale-95 transition-transform duration-300"
+        id="modalCard"
+      >
+        <!-- Modal Close Button -->
+        <button
+          onclick="closeProjectModal()"
+          class="absolute top-6 right-6 p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+
+        <!-- Modal Content (Populated dynamically) -->
+        <div id="modalBody" class="space-y-6">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div
+      id="toast"
+      class="fixed bottom-6 right-6 z-50 glass-panel px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 border border-brand-500/20"
+    >
+      <i data-lucide="check-circle-2" class="w-5 h-5 text-brand-500"></i>
+      <span id="toastMsg" class="text-xs font-semibold"
+        >Action completed successfully!</span
+      >
+    </div>
+
+    <!-- APPLICATION LOGIC & DATA SCRIPT -->
+    <script>
+      // --- 1. DATA MODELS Tailored for Mihret Girma ---
+      const SKILLS = [
+        {
+          name: "HTML5 & Semantic Markup",
+          category: "frontend",
+          level: 95,
+          icon: "code",
+          exp: "Proficient",
+        },
+        {
+          name: "CSS3 & Responsive Design",
+          category: "frontend",
+          level: 90,
+          icon: "palette",
+          exp: "Proficient",
+        },
+        {
+          name: "JavaScript (ES6+)",
+          category: "frontend",
+          level: 85,
+          icon: "file-code",
+          exp: "Advanced",
+        },
+        {
+          name: "Tailwind CSS Layouts",
+          category: "frontend",
+          level: 90,
+          icon: "layers",
+          exp: "Advanced",
+        },
+        {
+          name: "Flutter Mobile Framework",
+          category: "mobile",
+          level: 85,
+          icon: "smartphone",
+          exp: "Active",
+        },
+        {
+          name: "Dart Programming",
+          category: "mobile",
+          level: 82,
+          icon: "terminal",
+          exp: "Active",
+        },
+        {
+          name: "Mobile UI Components",
+          category: "mobile",
+          level: 88,
+          icon: "layout",
+          exp: "Active",
+        },
+        {
+          name: "Figma UI/UX Prototyping",
+          category: "design",
+          level: 88,
+          icon: "figma",
+          exp: "Proficient",
+        },
+        {
+          name: "Wireframing & User Flows",
+          category: "design",
+          level: 85,
+          icon: "pen-tool",
+          exp: "Proficient",
+        },
+        {
+          name: "Problem Solving & Logic",
+          category: "core",
+          level: 92,
+          icon: "brain-circuit",
+          exp: "Core Focus",
+        },
+        {
+          name: "Data Structures & Algorithms",
+          category: "core",
+          level: 80,
+          icon: "cpu",
+          exp: "Student",
+        },
+        {
+          name: "Git & GitHub Version Control",
+          category: "core",
+          level: 85,
+          icon: "git-branch",
+          exp: "Proficient",
+        },
+      ];
+
+      const PROJECTS = [
+        {
+          id: 1,
+          title: "Personal Portfolio Website",
+          category: "web",
+          image:
+            "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
+          tags: ["HTML5", "CSS3", "JavaScript", "Tailwind"],
+          summary:
+            "Single-page developer portfolio with glassmorphism UI, interactive accent themes, and responsive design.",
+          description:
+            "Designed and engineered a sleek modern personal portfolio to showcase my frontend development, mobile applications, and UI/UX design projects. Features dynamic theme switching, responsive modal popups, and smooth scrolling.",
+          githubUrl: "https://github.com/MihretGirma",
+        },
+        {
+          id: 2,
+          title: "Student Management System",
+          category: "system",
+          image:
+            "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
+          tags: ["JavaScript", "System Design", "UI/UX", "HTML/CSS"],
+          summary:
+            "Comprehensive platform for student records, attendance tracking, and performance analytics.",
+          description:
+            "An interactive system designed for academic administration. Features student profile management, course enrollments, attendance tracking, grade recording, and intuitive dashboards designed with simple navigation.",
+          githubUrl: "https://github.com/MihretGirma",
+        },
+        {
+          id: 3,
+          title: "Library Management System",
+          category: "system",
+          image:
+            "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80",
+          tags: ["Software Architecture", "JavaScript", "Problem Solving"],
+          summary:
+            "Book cataloging, loan issuing, member management, and automated fine calculation solution.",
+          description:
+            "A software solution engineered to digitize library operations. Supports book inventory search, automated issue/return tracking, member registration, and due date calculation with logic built for real-world usability.",
+          githubUrl: "https://github.com/MihretGirma",
+        },
+      ];
+
+      // --- 2. DYNAMIC TYPING EFFECT ---
+      const typingRoles = [
+        "Frontend Developer.",
+        "Flutter Mobile Developer.",
+        "UI/UX Designer.",
+        "Software Engineering Student.",
+      ];
+      let roleIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function typeEffect() {
+        const currentRole = typingRoles[roleIndex];
+        const typingElem = document.getElementById("typingText");
+
+        if (isDeleting) {
+          typingElem.textContent = currentRole.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          typingElem.textContent = currentRole.substring(0, charIndex + 1);
+          charIndex++;
+        }
+
+        let typeSpeed = isDeleting ? 40 : 80;
+
+        if (!isDeleting && charIndex === currentRole.length) {
+          typeSpeed = 2000;
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          roleIndex = (roleIndex + 1) % typingRoles.length;
+          typeSpeed = 500;
+        }
+
+        setTimeout(typeEffect, typeSpeed);
+      }
+
+      // --- 3. SKILLS RENDER & FILTER ---
+      function renderSkills(filter = "all") {
+        const container = document.getElementById("skillsContainer");
+        container.innerHTML = "";
+
+        const filtered =
+          filter === "all"
+            ? SKILLS
+            : SKILLS.filter((s) => s.category === filter);
+
+        filtered.forEach((skill) => {
+          const card = document.createElement("div");
+          card.className =
+            "glass-panel p-5 rounded-2xl hover:border-brand-500/40 transition-all hover:-translate-y-1 group";
+          card.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="p-2.5 rounded-xl bg-brand-500/10 text-brand-500 group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                            <i data-lucide="${skill.icon}" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-200/60 dark:bg-slate-800 text-slate-500 dark:text-slate-400">${skill.exp}</span>
+                    </div>
+                    <h4 class="font-bold text-sm mb-2">${skill.name}</h4>
+                    <div class="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                        <div class="bg-brand-500 h-full rounded-full transition-all duration-1000" style="width: ${skill.level}%"></div>
+                    </div>
+                    <div class="flex justify-between items-center mt-2 text-[10px] font-semibold text-slate-400">
+                        <span>Proficiency</span>
+                        <span>${skill.level}%</span>
+                    </div>
+                `;
+          container.appendChild(card);
+        });
+        lucide.createIcons();
+      }
+
+      function filterSkills(cat) {
+        document.querySelectorAll(".skill-tab-btn").forEach((btn) => {
+          btn.classList.remove("bg-brand-500", "text-white");
+          btn.classList.add("text-slate-600", "dark:text-slate-300");
+        });
+        event.target.classList.add("bg-brand-500", "text-white");
+        event.target.classList.remove("text-slate-600", "dark:text-slate-300");
+        renderSkills(cat);
+      }
+
+      // --- 4. PROJECTS RENDER & FILTER ---
+      function renderProjects(filter = "all") {
+        const grid = document.getElementById("projectsGrid");
+        grid.innerHTML = "";
+
+        const filtered =
+          filter === "all"
+            ? PROJECTS
+            : PROJECTS.filter((p) => p.category === filter);
+
+        filtered.forEach((project) => {
+          const card = document.createElement("div");
+          card.className =
+            "glass-panel rounded-3xl overflow-hidden hover:shadow-xl hover:border-brand-500/40 transition-all duration-300 flex flex-col group";
+          card.innerHTML = `
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 justify-between">
+                            <button onclick="openProjectModal(${project.id})" class="text-xs font-semibold px-3 py-1.5 bg-white text-slate-900 rounded-lg shadow hover:bg-brand-500 hover:text-white transition-colors">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex flex-wrap gap-1.5 mb-3">
+                                ${project.tags.map((t) => `<span class="px-2.5 py-0.5 rounded-full bg-brand-500/10 text-brand-500 text-[10px] font-bold">${t}</span>`).join("")}
+                            </div>
+                            <h3 class="font-heading font-bold text-lg hover:text-brand-500 transition-colors cursor-pointer" onclick="openProjectModal(${project.id})">${project.title}</h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">${project.summary}</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-200/50 dark:border-slate-800/50 text-xs font-semibold">
+                            <button onclick="openProjectModal(${project.id})" class="text-brand-500 hover:underline flex items-center gap-1">
+                                Overview <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                            <a href="${project.githubUrl}" target="_blank" rel="noopener" class="text-slate-500 hover:text-brand-500 transition-colors flex items-center gap-1" title="GitHub">
+                                <i data-lucide="github" class="w-4 h-4"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                `;
+          grid.appendChild(card);
+        });
+        lucide.createIcons();
+      }
+
+      function filterProjects(cat) {
+        document.querySelectorAll(".project-btn").forEach((btn) => {
+          btn.classList.remove("bg-brand-500", "text-white");
+          btn.classList.add(
+            "glass-panel",
+            "text-slate-600",
+            "dark:text-slate-300",
+          );
+        });
+        event.target.classList.add("bg-brand-500", "text-white");
+        event.target.classList.remove(
+          "glass-panel",
+          "text-slate-600",
+          "dark:text-slate-300",
+        );
+        renderProjects(cat);
+      }
+
+      // --- 5. MODAL & INTERACTION HANDLERS ---
+      function openProjectModal(id) {
+        const project = PROJECTS.find((p) => p.id === id);
+        if (!project) return;
+
+        const modal = document.getElementById("projectModal");
+        const body = document.getElementById("modalBody");
+        const card = document.getElementById("modalCard");
+
+        body.innerHTML = `
+                <div class="h-56 sm:h-64 rounded-2xl overflow-hidden relative">
+                    <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        ${project.tags.map((t) => `<span class="px-3 py-1 rounded-full bg-brand-500/10 text-brand-500 text-xs font-bold">${t}</span>`).join("")}
+                    </div>
+                    <h2 class="text-2xl font-heading font-bold">${project.title}</h2>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-3 leading-relaxed">${project.description}</p>
+                </div>
+                <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-200/50 dark:border-slate-800/50">
+                    <a href="${project.githubUrl}" target="_blank" rel="noopener" class="px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold shadow-md flex items-center gap-2">
+                        <i data-lucide="github" class="w-4 h-4"></i> View on GitHub
+                    </a>
+                </div>
+            `;
+
+        lucide.createIcons();
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+          modal.classList.remove("opacity-0");
+          card.classList.remove("scale-95");
+        }, 10);
+      }
+
+      function closeProjectModal() {
+        const modal = document.getElementById("projectModal");
+        const card = document.getElementById("modalCard");
+
+        modal.classList.add("opacity-0");
+        card.classList.add("scale-95");
+        setTimeout(() => {
+          modal.classList.add("hidden");
+        }, 300);
+      }
+
+      // --- 6. UTILITY FUNCTIONS ---
+      function copyToClipboard(text, message) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showToast(message);
+        } catch (err) {
+          showToast("Failed to copy to clipboard");
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function setAccentTheme(themeName) {
+        document.documentElement.setAttribute("data-theme", themeName);
+        localStorage.setItem("portfolio-accent-theme", themeName);
+        showToast(`Accent theme updated to ${themeName.toUpperCase()}`);
+      }
+
+      function toggleDarkMode() {
+        const isDark = document.documentElement.classList.toggle("dark");
+        localStorage.setItem("portfolio-dark-mode", isDark ? "dark" : "light");
+      }
+
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("hidden");
+      }
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        const msg = document.getElementById("toastMsg");
+        msg.textContent = message;
+
+        toast.classList.remove("translate-y-20", "opacity-0");
+        setTimeout(() => {
+          toast.classList.add("translate-y-20", "opacity-0");
+        }, 3000);
+      }
+
+      function handleContactSubmit(e) {
+        e.preventDefault();
+        const btn = document.getElementById("submitBtn");
+        btn.disabled = true;
+        btn.innerHTML = `<span>Sending...</span> <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>`;
+        lucide.createIcons();
+
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.innerHTML = `<span>Send Message to Mihret</span> <i data-lucide="send" class="w-4 h-4"></i>`;
+          lucide.createIcons();
+          document.getElementById("contactForm").reset();
+          showToast("Thank you! Message sent to Mihret Girma.");
+        }, 1500);
+      }
+
+      // --- 7. INITIALIZATION ---
+      window.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        const savedTheme =
+          localStorage.getItem("portfolio-accent-theme") || "indigo";
+        setAccentTheme(savedTheme);
+
+        const savedMode = localStorage.getItem("portfolio-dark-mode");
+        if (savedMode === "light") {
+          document.documentElement.classList.remove("dark");
+        } else {
+          document.documentElement.classList.add("dark");
+        }
+
+        typeEffect();
+        renderSkills();
+        renderProjects();
+
+        const themeBtn = document.getElementById("themeCustomizerBtn");
+        const themeMenu = document.getElementById("themeMenu");
+        themeBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          themeMenu.classList.toggle("hidden");
+        });
+        document.addEventListener("click", () =>
+          themeMenu.classList.add("hidden"),
+        );
+
+        document
+          .getElementById("mobileMenuBtn")
+          .addEventListener("click", toggleMobileMenu);
+
+        lucide.createIcons();
+      });
+    </script>
+  </body>
+</html>
